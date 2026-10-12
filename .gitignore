@@ -1,0 +1,12 @@
+# Racket build artifacts
+compiled/
+**/compiled/
+*.zo
+*.so
+*.dep
+
+# Scribble output
+doc/
+
+# macOS
+.DS_Store
