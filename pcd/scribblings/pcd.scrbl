@@ -47,8 +47,8 @@ package, a declared runtime dependency.
              [sizes (listof pcd-size/c)]
              [types (listof pcd-type/c)]
              [counts (listof pcd-count/c)]
-             [width exact-nonneg-integer?]
-             [height exact-nonneg-integer?]
+             [width exact-nonnegative-integer?]
+             [height exact-nonnegative-integer?]
              [viewpoint (vectorof flonum?)]
              [points (vectorof (vectorof real?))])]{
 
@@ -85,8 +85,8 @@ values are @racket[equal?], so a round-trip yields an @racket[equal?] value.
   @racket[counts]). Float columns hold flonums; integer columns hold exact
   integers within the range of their size and signedness.}]
 
-@defproc[(pcd-size/c [v any/c]) boolean?]
-@defproc[(pcd-type/c [v any/c]) boolean?]
+@defproc[(pcd-size/c [v any/c]) boolean?]{Recognizes legal SIZE values.}
+@defproc[(pcd-type/c [v any/c]) boolean?]{Recognizes legal TYPE values.}
 @defproc[(pcd-count/c [v any/c]) boolean?]{Flat contracts for the field
 tables: size in @racket['(1 2 4 8)], type in @racket['(#\F #\U #\I)], count
 a positive exact integer.}
