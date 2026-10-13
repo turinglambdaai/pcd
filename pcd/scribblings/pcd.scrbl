@@ -10,7 +10,7 @@
 
 @defmodule[pcd]
 
-This package reads and writes @tech{PCD} point-cloud files — the native
+This package reads and writes @deftech{PCD} point-cloud files — the native
 file format of the @hyperlink["https://pointclouds.org/"]{Point Cloud Library
 (PCL)}, version 0.7. All three PCD storage modes are supported:
 @litchar{DATA ascii}, @litchar{DATA binary}, and @litchar{DATA
