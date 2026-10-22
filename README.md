@@ -1,5 +1,7 @@
 # pcd
 
+**English** · [中文](README.zh-CN.md)
+
 [![CI](https://github.com/turinglambdaai/pcd/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/pcd/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A pure-Racket reader and writer for **PCD point-cloud files** — the native
