@@ -21,7 +21,7 @@ package, a declared runtime dependency.
 @section[#:tag "pcd-quickstart"]{Quick start}
 
 @racketblock[
-(require pcd)
+(require racket/port pcd)
 
 (define cloud
   (point-cloud
@@ -35,8 +35,10 @@ package, a declared runtime dependency.
            (vector 1.0 2.0 3.0 -0.5)
            (vector 4.0 5.0 6.0 1.5))))
 
-(pcd-write-file "/tmp/example.pcd" cloud #:data 'binary-compressed)
-(define cloud2 (pcd-read-file "/tmp/example.pcd"))
+(define encoded
+  (call-with-output-bytes
+   (lambda (out) (pcd-write out cloud #:data 'binary-compressed))))
+(define cloud2 (pcd-read-bytes encoded))
 (equal? cloud cloud2)  ; #t — round-trips are exact
 ]
 
