@@ -15,7 +15,8 @@ raco pkg install pcd
 ## 示例
 
 ```racket
-(require pcd)
+#lang racket/base
+(require racket/port pcd)
 
 (define cloud
   (point-cloud
@@ -29,8 +30,11 @@ raco pkg install pcd
            (vector 1.0 2.0 3.0 -0.5)
            (vector 4.0 5.0 6.0 1.5))))
 
-(pcd-write-file "/tmp/example.pcd" cloud #:data 'binary-compressed)
-(define cloud2 (pcd-read-file "/tmp/example.pcd"))
+(define encoded
+  (call-with-output-bytes
+   (lambda (out) (pcd-write out cloud #:data 'binary-compressed))))
+(define cloud2 (pcd-read-bytes encoded))
+(equal? cloud2 cloud) ; => #t
 ```
 
 读取任意 PCD 文件（无论之前是否调用过 `pcd-write`）：
@@ -40,6 +44,30 @@ raco pkg install pcd
 (point-cloud-fields c)   ; '("x" "y" "z" "intensity")
 (point-cloud-points c)   ; point-major vector of value vectors
 ```
+
+## API 文档与本地验证
+
+[完整 Scribble API 手册](pcd/scribblings/pcd.scrbl)覆盖
+`point-cloud` 结构、端口/文件 API、PCD 0.7 三种存储模式、
+头部验证及错误行为。[可运行入门示例](examples/quickstart.rkt)
+使用合成点云，通过内存端口检查 `ascii`、`binary`、
+`binary-compressed` 三种格式的往返一致性，不依赖固定
+`/tmp` 路径、外部样本或真实硬件。压缩模式依赖已经声明的
+纯 Racket `lzf` 包。
+
+在安装 Racket 后，从仓库根目录执行：
+
+```sh
+raco pkg install --auto --link "$(pwd)"
+raco test -p pcd
+racket examples/quickstart.rkt
+raco setup --check-pkg-deps -l pcd
+```
+
+CI 在 Ubuntu、Windows 和 macOS 执行以上步骤。
+`pcd` 是 multi-collection Racket 包中的公开 collection。
+如需处理真实点云文件，仍可使用 `pcd-read-file` 与
+`pcd-write-file`。
 
 ## point-cloud 结构体
 
