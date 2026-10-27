@@ -18,7 +18,8 @@ raco pkg install pcd
 ## Example
 
 ```racket
-(require pcd)
+#lang racket/base
+(require racket/port pcd)
 
 (define cloud
   (point-cloud
@@ -32,8 +33,11 @@ raco pkg install pcd
            (vector 1.0 2.0 3.0 -0.5)
            (vector 4.0 5.0 6.0 1.5))))
 
-(pcd-write-file "/tmp/example.pcd" cloud #:data 'binary-compressed)
-(define cloud2 (pcd-read-file "/tmp/example.pcd"))
+(define encoded
+  (call-with-output-bytes
+   (lambda (out) (pcd-write out cloud #:data 'binary-compressed))))
+(define cloud2 (pcd-read-bytes encoded))
+(equal? cloud2 cloud) ; => #t
 ```
 
 And reading any PCD file (with or without a preceding call to `pcd-write`):
@@ -43,6 +47,29 @@ And reading any PCD file (with or without a preceding call to `pcd-write`):
 (point-cloud-fields c)   ; '("x" "y" "z" "intensity")
 (point-cloud-points c)   ; point-major vector of value vectors
 ```
+
+## Tested API examples and development
+
+The complete [Scribble API reference](pcd/scribblings/pcd.scrbl) documents
+the `point-cloud` structure, port and file APIs, the three PCD 0.7 storage
+modes, header validation and format errors. The [runnable quickstart](examples/quickstart.rkt)
+constructs a synthetic cloud and verifies **all three** `ascii`, `binary`
+and `binary-compressed` round trips using in-memory ports—no hard-coded
+`/tmp` path, fixture download or PCL/ECU hardware required. Compressed
+mode uses the declared pure-Racket `lzf` dependency.
+
+Run from a local checkout (Racket installed):
+
+```sh
+raco pkg install --auto --link "$(pwd)"
+raco test -p pcd
+racket examples/quickstart.rkt
+raco setup --check-pkg-deps -l pcd
+```
+
+CI runs these checks on Ubuntu, Windows and macOS. The public `pcd`
+collection belongs to a multi-collection Racket package. File APIs are
+still available via `pcd-read-file` and `pcd-write-file` for real data.
 
 ## The point-cloud record
 
