@@ -2,7 +2,7 @@
 
 [English](README.md) · **中文**
 
-[![CI](https://github.com/turinglambdaai/pcd/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/pcd/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/turlamai/pcd/actions/workflows/ci.yml/badge.svg)](https://github.com/turlamai/pcd/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 一个用于 **PCD 点云文件** 的纯 Racket 读写器。PCD 是 [Point Cloud Library (PCL)](https://pointclouds.org/) 的原生文件格式，此处支持 0.7 版。它支持全部三种 PCD 存储模式的读写：`DATA ascii`、`DATA binary` 和 `DATA binary_compressed`。
 
