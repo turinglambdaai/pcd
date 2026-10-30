@@ -1,7 +1,15 @@
 name: CI
 on:
   push:
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     strategy:
@@ -20,6 +28,6 @@ jobs:
       - name: Run tests
         run: raco test -p pcd
       - name: Verify all three documented PCD storage modes
-        run: racket examples/quickstart.rkt
+        run: racket pcd/examples/quickstart.rkt
       - name: Build Scribble manual and check package dependencies
         run: raco setup --check-pkg-deps -l pcd

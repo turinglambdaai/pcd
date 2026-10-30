@@ -52,7 +52,7 @@ And reading any PCD file (with or without a preceding call to `pcd-write`):
 
 The complete [Scribble API reference](pcd/scribblings/pcd.scrbl) documents
 the `point-cloud` structure, port and file APIs, the three PCD 0.7 storage
-modes, header validation and format errors. The [runnable quickstart](examples/quickstart.rkt)
+modes, header validation and format errors. The [runnable quickstart](pcd/examples/quickstart.rkt)
 constructs a synthetic cloud and verifies **all three** `ascii`, `binary`
 and `binary-compressed` round trips using in-memory ports—no hard-coded
 `/tmp` path, fixture download or PCL/ECU hardware required. Compressed
@@ -63,7 +63,7 @@ Run from a local checkout (Racket installed):
 ```sh
 raco pkg install --auto --link "$(pwd)"
 raco test -p pcd
-racket examples/quickstart.rkt
+racket pcd/examples/quickstart.rkt
 raco setup --check-pkg-deps -l pcd
 ```
 
