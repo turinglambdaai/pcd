@@ -49,7 +49,7 @@ raco pkg install pcd
 
 [完整 Scribble API 手册](pcd/scribblings/pcd.scrbl)覆盖
 `point-cloud` 结构、端口/文件 API、PCD 0.7 三种存储模式、
-头部验证及错误行为。[可运行入门示例](examples/quickstart.rkt)
+头部验证及错误行为。[可运行入门示例](pcd/examples/quickstart.rkt)
 使用合成点云，通过内存端口检查 `ascii`、`binary`、
 `binary-compressed` 三种格式的往返一致性，不依赖固定
 `/tmp` 路径、外部样本或真实硬件。压缩模式依赖已经声明的
@@ -60,7 +60,7 @@ raco pkg install pcd
 ```sh
 raco pkg install --auto --link "$(pwd)"
 raco test -p pcd
-racket examples/quickstart.rkt
+racket pcd/examples/quickstart.rkt
 raco setup --check-pkg-deps -l pcd
 ```
 
